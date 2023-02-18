@@ -296,7 +296,7 @@ extension CompressionParser on Parser {
   }
 }
 
-enum PropertyType { string, int, float, bool, color, file, object }
+enum PropertyType { string, int, float, bool, color, file, object, class_ }
 
 extension PropertyTypeExtension on PropertyType {
   String get name {
@@ -315,6 +315,8 @@ extension PropertyTypeExtension on PropertyType {
         return 'file';
       case PropertyType.object:
         return 'object';
+      case PropertyType.class_:
+        return 'class';
     }
   }
 }
