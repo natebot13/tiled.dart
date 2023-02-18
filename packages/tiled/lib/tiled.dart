@@ -8,9 +8,11 @@ import 'dart:ui';
 
 import 'package:archive/archive.dart';
 import 'package:collection/collection.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 import 'package:xml/xml.dart';
 
+part 'tiled.g.dart';
 part 'src/chunk.dart';
 part 'src/common/enums.dart';
 part 'src/common/flips.dart';
@@ -27,6 +29,8 @@ part 'src/objects/text.dart';
 part 'src/objects/tiled_object.dart';
 part 'src/parser.dart';
 part 'src/template.dart';
+part 'src/tiled_project_parser.dart';
+part 'src/tiled_project.dart';
 part 'src/tile_map_parser.dart';
 part 'src/tiled_map.dart';
 part 'src/tileset/grid.dart';

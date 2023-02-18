@@ -72,6 +72,10 @@ class JsonParser extends Parser {
   List<int> getIntList(String name) {
     return json[name] as List<int>;
   }
+
+  Map<String, dynamic> getObject(String name) {
+    return json[name] as Map<String, dynamic>;
+  }
 }
 
 abstract class Parser {

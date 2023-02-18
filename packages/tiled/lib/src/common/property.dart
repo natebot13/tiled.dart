@@ -84,6 +84,16 @@ class Property<T> {
           name: name,
           value: value,
         );
+
+      case PropertyType.class_:
+        final propertyType = parser.getString('propertyType');
+        final properties = parser.getProperties();
+
+        return CustomTypeProperty(
+          propertyType: propertyType,
+          name: name,
+          value: properties,
+        );
     }
   }
 }
@@ -204,6 +214,16 @@ class BoolProperty extends Property<bool> {
     required super.name,
     required super.value,
   }) : super(type: PropertyType.bool);
+}
+
+/// [value] is the [CustomProperties]
+class CustomTypeProperty extends Property<CustomProperties> {
+  final String propertyType;
+  CustomTypeProperty({
+    required super.name,
+    required super.value,
+    required this.propertyType,
+  }) : super(type: PropertyType.class_);
 }
 
 extension PropertiesParser on Parser {
