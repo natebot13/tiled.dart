@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:test/test.dart';
 import 'package:tiled/tiled.dart';
@@ -28,11 +27,7 @@ void main() {
     });
 
     test('sets color', () {
-      expect(objectGroup.colorHex, equals('#555500'));
-      expect(
-        objectGroup.color,
-        equals(Color(int.parse('0xff555500'))),
-      );
+      expect(objectGroup.color, equals('#555500'));
     });
 
     test('sets opacity', () {

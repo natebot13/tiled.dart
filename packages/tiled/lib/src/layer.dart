@@ -75,13 +75,7 @@ abstract class Layer {
 
   /// Hex-formatted tint color (#RRGGBB or #AARRGGBB) that is multiplied with
   /// any graphics drawn by this layer or any child layers (optional).
-  String? tintColorHex;
-
-  /// [Color] that is multiplied with any graphics drawn by this layer or any
-  /// child layers (optional).
-  ///
-  /// Parsed from [tintColorHex], will be null if parsing fails for any reason.
-  Color? tintColor;
+  String? tintColor;
 
   /// The opacity of the layer as a value from 0 to 1. Defaults to 1.
   double opacity;
@@ -105,7 +99,6 @@ abstract class Layer {
     this.parallaxY = 1,
     this.startX,
     this.startY,
-    this.tintColorHex,
     this.tintColor,
     this.opacity = 1,
     this.visible = true,
@@ -129,8 +122,7 @@ abstract class Layer {
     final parallaxY = parser.getDouble('parallaxy', defaults: 1);
     final startX = parser.getIntOrNull('startx');
     final startY = parser.getIntOrNull('starty');
-    final tintColorHex = parser.getStringOrNull('tintcolor');
-    final tintColor = parser.getColorOrNull('tintcolor');
+    final tintColor = parser.getStringOrNull('tintcolor');
     final opacity = parser.getDouble('opacity', defaults: 1);
     final visible = parser.getBool('visible', defaults: true);
     final properties = parser.getProperties();
@@ -167,7 +159,6 @@ abstract class Layer {
           parallaxY: parallaxY,
           startX: startX,
           startY: startY,
-          tintColorHex: tintColorHex,
           tintColor: tintColor,
           opacity: opacity,
           visible: visible,
@@ -185,10 +176,7 @@ abstract class Layer {
           'draworder',
           defaults: DrawOrder.topDown,
         );
-        final colorHex =
-            parser.getString('color', defaults: ObjectGroup.defaultColorHex);
-        final color =
-            parser.getColor('color', defaults: ObjectGroup.defaultColor);
+        final color = parser.getString('color', defaults: '#a0a0a4');
         final objects = parser.getChildrenAs('object', TiledObject.parse);
         layer = ObjectGroup(
           id: id,
@@ -202,20 +190,17 @@ abstract class Layer {
           parallaxY: parallaxY,
           startX: startX,
           startY: startY,
-          tintColorHex: tintColorHex,
           tintColor: tintColor,
           opacity: opacity,
           visible: visible,
           properties: properties,
           drawOrder: drawOrder,
           objects: objects,
-          colorHex: colorHex,
           color: color,
         );
         break;
       case LayerType.imageLayer:
-        final transparentColorHex = parser.getStringOrNull('transparentcolor');
-        final transparentColor = parser.getColorOrNull('transparentcolor');
+        final transparentColor = parser.getStringOrNull('transparentcolor');
         final image = parser.getSingleChildAs('image', TiledImage.parse);
         final repeatX = parser.getBool('repeatx', defaults: false);
         final repeatY = parser.getBool('repeaty', defaults: false);
@@ -233,13 +218,11 @@ abstract class Layer {
           repeatY: repeatY,
           startX: startX,
           startY: startY,
-          tintColorHex: tintColorHex,
           tintColor: tintColor,
           opacity: opacity,
           visible: visible,
           properties: properties,
           image: image,
-          transparentColorHex: transparentColorHex,
           transparentColor: transparentColor,
         );
         break;
@@ -257,7 +240,6 @@ abstract class Layer {
           parallaxY: parallaxY,
           startX: startX,
           startY: startY,
-          tintColorHex: tintColorHex,
           tintColor: tintColor,
           opacity: opacity,
           visible: visible,
@@ -391,7 +373,6 @@ class TileLayer extends Layer {
     super.parallaxY,
     super.startX,
     super.startY,
-    super.tintColorHex,
     super.tintColor,
     super.opacity,
     super.visible,
@@ -406,7 +387,6 @@ class TileLayer extends Layer {
         super(
           type: LayerType.tileLayer,
         );
-
   static List<List<Gid>>? maybeGenerate(
     List<int>? data,
     int width,
@@ -420,25 +400,15 @@ class TileLayer extends Layer {
 }
 
 class ObjectGroup extends Layer {
-  static const defaultColor = Color.fromARGB(255, 160, 160, 164);
-  static const defaultColorHex = '%a0a0a4';
-
   /// topdown (default) or index (indexOrder).
   DrawOrder drawOrder;
 
   /// List of [TiledObject].
   List<TiledObject> objects;
 
-  /// Hex-formatted color (#RRGGBB or #AARRGGBB) used to display the objects in
-  /// this group. (defaults to gray (“#a0a0a4”))
-  String colorHex;
-
-  /// [Color] used to display the objects in this group.
+  /// The color used to display the objects in this group.
   /// (defaults to gray (“#a0a0a4”))
-  ///
-  /// Parsed from [colorHex], will be fallback to [defaultColor] if parsing
-  /// fails for any reason.
-  Color color;
+  String color;
 
   ObjectGroup({
     super.id,
@@ -452,15 +422,13 @@ class ObjectGroup extends Layer {
     super.parallaxY,
     super.startX,
     super.startY,
-    super.tintColorHex,
     super.tintColor,
     super.opacity,
     super.visible,
     super.properties,
     this.drawOrder = DrawOrder.topDown,
     required this.objects,
-    this.colorHex = defaultColorHex,
-    this.color = defaultColor,
+    this.color = '#a0a0a4',
   }) : super(
           type: LayerType.objectGroup,
         );
@@ -470,15 +438,8 @@ class ImageLayer extends Layer {
   /// Image used by this layer.
   TiledImage image;
 
-  /// Hex-formatted color (#RRGGBB or #AARRGGBB) to be rendered as transparent
-  /// (optional).
-  String? transparentColorHex;
-
-  /// [Color] to be rendered as transparent (optional).
-  ///
-  /// Parsed from [transparentColorHex], will be null if parsing fails for any
-  /// reason.
-  Color? transparentColor;
+  /// Hex-formatted color (#RRGGBB) (optional).
+  String? transparentColor;
 
   /// Whether or not to repeat the image on the X-axis
   bool repeatX;
@@ -498,7 +459,6 @@ class ImageLayer extends Layer {
     super.parallaxY,
     super.startX,
     super.startY,
-    super.tintColorHex,
     super.tintColor,
     super.opacity,
     super.visible,
@@ -506,7 +466,6 @@ class ImageLayer extends Layer {
     required this.image,
     required this.repeatX,
     required this.repeatY,
-    this.transparentColorHex,
     this.transparentColor,
   }) : super(
           type: LayerType.imageLayer,
@@ -529,7 +488,6 @@ class Group extends Layer {
     super.parallaxY,
     super.startX,
     super.startY,
-    super.tintColorHex,
     super.tintColor,
     super.opacity,
     super.visible,
