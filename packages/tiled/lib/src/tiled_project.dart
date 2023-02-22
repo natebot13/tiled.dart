@@ -53,18 +53,14 @@ class Command {
 class CustomPropertyType {
   int id;
   String type;
-  String name;
-  String color;
-  List<String> useAs;
-  List<Member> members;
+  String name = '';
+  String color = '#FF000000';
+  List<String> useAs = [];
+  List<Member> members = [];
 
   CustomPropertyType({
     required this.id,
     required this.type,
-    required this.name,
-    required this.color,
-    required this.useAs,
-    required this.members,
   });
 
   Map<String, dynamic> toJson() => _$CustomPropertyTypeToJson(this);
