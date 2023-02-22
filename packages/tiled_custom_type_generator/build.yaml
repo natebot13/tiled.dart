@@ -1,0 +1,7 @@
+builders:
+  tiled_custom_type_generator|thing:
+    import: "package:tiled_custom_type_generator/builders.dart"
+    builder_factories: ["tiledCustomTypeLocator"]
+    build_extensions: {'.dart': ['.tiled-custom-type']}
+    build_to: cache
+    auto_apply: dependents

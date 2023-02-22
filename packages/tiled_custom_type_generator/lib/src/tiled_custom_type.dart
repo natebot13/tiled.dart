@@ -1,0 +1,3 @@
+class TiledCustomType {
+  const TiledCustomType();
+}

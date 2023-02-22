@@ -87,12 +87,12 @@ void main() {
             equals(42),
           );
           expect(
-            properties.getProperty<ColorProperty>('color property')!.hexValue,
+            properties.getProperty<ColorProperty>('color property')!.value,
             equals('#00112233'),
           );
           expect(
-            properties.getValue<Color>('color property'),
-            equals(const Color(0x00112233)),
+            properties.getValue<String>('color property'),
+            equals('#00112233'),
           );
           expect(
             properties.getValue<double>('float property'),

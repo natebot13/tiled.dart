@@ -37,8 +37,7 @@ class Property<T> {
       case PropertyType.color:
         return ColorProperty(
           name: name,
-          value: parser.getColor('value', defaults: const Color(0x00000000)),
-          hexValue: parser.getString('value', defaults: '#00000000'),
+          value: parser.getString('value', defaults: '#00000000'),
         );
 
       case PropertyType.bool:
@@ -131,7 +130,7 @@ class CustomProperties extends Iterable<Property<Object>> {
   ///  - float property -> double
   ///  - boolean property -> bool
   ///  - string property -> string
-  ///  - color property -> ui.Color
+  ///  - color property -> string (hex color)
   ///  - file property -> string (path)
   ///  - object property -> int (ID)
   T? getValue<T>(String name) {
@@ -166,13 +165,10 @@ class ObjectProperty extends Property<int> {
 }
 
 /// [value] is the color
-class ColorProperty extends Property<Color> {
-  final String hexValue;
-
+class ColorProperty extends Property<String> {
   ColorProperty({
     required super.name,
     required super.value,
-    required this.hexValue,
   }) : super(type: PropertyType.color);
 }
 
