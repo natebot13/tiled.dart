@@ -70,17 +70,7 @@ class TiledMap {
   List<Tileset> tilesets;
   List<Layer> layers;
 
-  /// Hex-formatted color (#RRGGBB or #AARRGGBB) to be rendered as a solid color
-  /// behind all other layers (optional).
-  String? backgroundColorHex;
-
-  /// [Color] to be rendered as a solid color behind all other layers
-  /// (optional).
-  ///
-  /// Parsed from [backgroundColorHex], will be null if parsing fails for any
-  /// reason.
-  Color? backgroundColor;
-
+  String? backgroundColor;
   int compressionLevel;
 
   int? nextLayerId;
@@ -107,7 +97,6 @@ class TiledMap {
     required this.tileHeight,
     this.tilesets = const [],
     this.layers = const [],
-    this.backgroundColorHex,
     this.backgroundColor,
     this.compressionLevel = -1,
     this.hexSideLength,
@@ -287,8 +276,7 @@ class TiledMap {
   }
 
   factory TiledMap.parse(Parser parser, {List<TsxProvider>? tsxList}) {
-    final backgroundColorHex = parser.getStringOrNull('backgroundcolor');
-    final backgroundColor = parser.getColorOrNull('backgroundcolor');
+    final backgroundColor = parser.getStringOrNull('backgroundcolor');
     final compressionLevel = parser.getInt('compressionlevel', defaults: -1);
     final height = parser.getInt('height');
     final hexSideLength = parser.getIntOrNull('hexsidelength');
@@ -344,7 +332,6 @@ class TiledMap {
       tileHeight: tileHeight,
       tilesets: tilesets,
       layers: layers,
-      backgroundColorHex: backgroundColorHex,
       backgroundColor: backgroundColor,
       compressionLevel: compressionLevel,
       hexSideLength: hexSideLength,
