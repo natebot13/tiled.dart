@@ -54,13 +54,14 @@ CustomPropertyType _$CustomPropertyTypeFromJson(Map<String, dynamic> json) =>
     CustomPropertyType(
       id: json['id'] as int,
       type: json['type'] as String,
-      name: json['name'] as String,
-      color: json['color'] as String,
-      useAs: (json['useAs'] as List<dynamic>).map((e) => e as String).toList(),
-      members: (json['members'] as List<dynamic>)
+    )
+      ..name = json['name'] as String
+      ..color = json['color'] as String
+      ..useAs =
+          (json['useAs'] as List<dynamic>).map((e) => e as String).toList()
+      ..members = (json['members'] as List<dynamic>)
           .map((e) => Member.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+          .toList();
 
 Map<String, dynamic> _$CustomPropertyTypeToJson(CustomPropertyType instance) =>
     <String, dynamic>{
