@@ -1,0 +1,8 @@
+# targets:
+#   $default:
+#     builders:
+#       json_serializable:
+#         enabled: true
+#       tiled_custom_type_generator:extractTypes:
+#         generate_for: ['**.dart']
+#         enabled: true

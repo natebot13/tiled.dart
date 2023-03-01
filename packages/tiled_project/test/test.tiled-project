@@ -1,0 +1,202 @@
+{
+    "automappingRulesFile": "",
+    "commands": [
+        {
+            "arguments": "--something",
+            "command": "protoc",
+            "enabled": true,
+            "name": "This is a command",
+            "saveBeforeExecute": true,
+            "shortcut": "F5",
+            "showOutput": true,
+            "workingDirectory": "."
+        }
+    ],
+    "extensionsPath": "extensions",
+    "folders": [
+        "."
+    ],
+    "propertyTypes": [
+        {
+            "id": 1,
+            "name": "ColliderType",
+            "storageType": "int",
+            "type": "enum",
+            "values": [
+                "Solid",
+                "Dynamic"
+            ],
+            "valuesAsFlags": false
+        },
+        {
+            "color": "#ffa0a0a4",
+            "id": 6,
+            "members": [
+                {
+                    "name": "data",
+                    "type": "file",
+                    "value": "sfx/Pull.mp3"
+                }
+            ],
+            "name": "FileData",
+            "type": "class",
+            "useAs": [
+                "property",
+                "map",
+                "layer",
+                "object",
+                "tile",
+                "tileset",
+                "wangcolor",
+                "wangset"
+            ]
+        },
+        {
+            "color": "#ffa0a0a4",
+            "id": 2,
+            "members": [
+                {
+                    "name": "aabb",
+                    "type": "object",
+                    "value": 0
+                },
+                {
+                    "name": "colliderType",
+                    "propertyType": "ColliderType",
+                    "type": "int",
+                    "value": 0
+                },
+                {
+                    "name": "extraData",
+                    "type": "class",
+                    "value": {
+                    }
+                },
+                {
+                    "name": "gravityScale",
+                    "type": "float",
+                    "value": 2.5
+                },
+                {
+                    "name": "partner",
+                    "type": "string",
+                    "value": ""
+                },
+                {
+                    "name": "partner2",
+                    "type": "string",
+                    "value": ""
+                },
+                {
+                    "name": "yesOrNo",
+                    "type": "bool",
+                    "value": false
+                }
+            ],
+            "name": "PhysicsComponent",
+            "type": "class",
+            "useAs": [
+                "object"
+            ]
+        },
+        {
+            "color": "#ffa0a0a4",
+            "id": 16,
+            "members": [
+                {
+                    "name": "blag",
+                    "type": "object",
+                    "value": 0
+                },
+                {
+                    "name": "color from another mother",
+                    "type": "color",
+                    "value": ""
+                },
+                {
+                    "name": "d",
+                    "type": "object",
+                    "value": 0
+                },
+                {
+                    "name": "data",
+                    "propertyType": "FileData",
+                    "type": "class",
+                    "value": {
+                    }
+                },
+                {
+                    "name": "fdsa",
+                    "type": "color",
+                    "value": ""
+                }
+            ],
+            "name": "Class2",
+            "type": "class",
+            "useAs": [
+                "property",
+                "map",
+                "layer",
+                "object",
+                "tile",
+                "tileset",
+                "wangcolor",
+                "wangset"
+            ]
+        },
+        {
+            "color": "#ffa0a0a4",
+            "id": 17,
+            "members": [
+            ],
+            "name": "Class3",
+            "type": "class",
+            "useAs": [
+                "property",
+                "map",
+                "layer",
+                "object",
+                "tile",
+                "tileset",
+                "wangcolor",
+                "wangset"
+            ]
+        },
+        {
+            "id": 18,
+            "name": "Enum1",
+            "storageType": "string",
+            "type": "enum",
+            "values": [
+            ],
+            "valuesAsFlags": false
+        },
+        {
+            "color": "#ffa0a0a4",
+            "id": 19,
+            "members": [
+            ],
+            "name": "Class4",
+            "type": "class",
+            "useAs": [
+                "property",
+                "map",
+                "layer",
+                "object",
+                "tile",
+                "tileset",
+                "wangcolor",
+                "wangset"
+            ]
+        },
+        {
+            "id": 20,
+            "name": "Enum2",
+            "storageType": "string",
+            "type": "enum",
+            "values": [
+            ],
+            "valuesAsFlags": false
+        }
+    ]
+}

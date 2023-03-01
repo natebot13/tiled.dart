@@ -1,0 +1,88 @@
+[
+    {
+        "id": 21,
+        "type": "enum",
+        "name": "Thing",
+        "storageType": "string",
+        "values": [
+            "thing1",
+            "thing2"
+        ],
+        "valuesAsFlags": false
+    },
+    {
+        "id": 3,
+        "type": "class",
+        "name": "FileData",
+        "color": "#ffa0a0a4",
+        "useAs": [
+            "property",
+            "map",
+            "layer",
+            "object",
+            "tile"
+        ],
+        "members": [
+            {
+                "name": "name",
+                "type": "file",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "id": 22,
+        "type": "class",
+        "name": "FilePair",
+        "useAs": [
+            "property",
+            "map",
+            "layer",
+            "object",
+            "tile"
+        ],
+        "members": [
+            {
+                "name": "first",
+                "type": "class",
+                "propertyType": "FileData",
+                "value": {}
+            },
+            {
+                "name": "second",
+                "type": "class",
+                "propertyType": "FileData",
+                "value": {}
+            }
+        ]
+    },
+    {
+        "id": 23,
+        "type": "class",
+        "name": "SomeCoolObject",
+        "useAs": [
+            "property",
+            "map",
+            "layer",
+            "object",
+            "tile"
+        ],
+        "members": [
+            {
+                "name": "name",
+                "type": "string",
+                "value": ""
+            },
+            {
+                "name": "theAgeOfAThing",
+                "type": "int",
+                "value": 0
+            },
+            {
+                "name": "decimal",
+                "type": "float",
+                "value": 0
+            }
+        ]
+    }
+]
