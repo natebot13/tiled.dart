@@ -65,6 +65,7 @@ class Property<T> {
         );
 
       case PropertyType.string:
+        final propertyType = parser.getStringOrNull('propertytype');
         final value = parser.formatSpecificParsing((json) {
           return json.getString('value', defaults: '');
         }, (xml) {
@@ -82,16 +83,26 @@ class Property<T> {
         return StringProperty(
           name: name,
           value: value,
+          propertyType: propertyType,
         );
 
       case PropertyType.class_:
-        final propertyType = parser.getString('propertyType');
-        final properties = parser.getProperties();
+        final propertyType = parser.getString('propertytype');
+        final value = parser.formatSpecificParsing(
+          (json) {
+            return json.getObject('value');
+          },
+          (xml) {
+            throw UnsupportedError(
+              'xml custom properties are not supported yet',
+            );
+          },
+        );
 
         return CustomTypeProperty(
           propertyType: propertyType,
           name: name,
-          value: properties,
+          value: value,
         );
     }
   }
@@ -174,9 +185,11 @@ class ColorProperty extends Property<String> {
 
 /// [value] is the string text
 class StringProperty extends Property<String> {
+  String? propertyType;
   StringProperty({
     required super.name,
     required super.value,
+    this.propertyType,
   }) : super(type: PropertyType.string);
 }
 
@@ -213,7 +226,7 @@ class BoolProperty extends Property<bool> {
 }
 
 /// [value] is the [CustomProperties]
-class CustomTypeProperty extends Property<CustomProperties> {
+class CustomTypeProperty extends Property<Map<String, dynamic>> {
   final String propertyType;
   CustomTypeProperty({
     required super.name,

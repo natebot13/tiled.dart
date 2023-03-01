@@ -1,15 +1,19 @@
-part of tiled;
+import 'package:json_annotation/json_annotation.dart';
+
+part 'tiled_project.g.dart';
 
 /// The tiledProject
 @JsonSerializable()
 class TiledProject {
   TiledProject({
-    required this.automappingRulesFile,
-    required this.commands,
-    required this.extensionsPath,
-    required this.folders,
-    required this.propertyTypes,
-  });
+    this.automappingRulesFile = '',
+    List<Command>? commands,
+    this.extensionsPath = '',
+    List<String>? folders,
+    List<CustomPropertyType>? propertyTypes,
+  })  : commands = commands ?? [],
+        folders = folders ?? [],
+        propertyTypes = propertyTypes ?? [];
 
   String automappingRulesFile;
   final List<Command> commands;
@@ -49,26 +53,26 @@ class Command {
       _$CommandFromJson(json);
 }
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class CustomPropertyType {
-  int id;
-  String type;
+  int id = 0;
+  String type = 'string';
   String name = '';
-  String color = '#FF000000';
-  List<String> useAs = [];
-  List<Member> members = [];
+  String? storageType;
+  String? color;
+  List<String>? useAs;
+  List<Member>? members;
+  List<String>? values;
+  bool? valuesAsFlags;
 
-  CustomPropertyType({
-    required this.id,
-    required this.type,
-  });
+  CustomPropertyType();
 
   Map<String, dynamic> toJson() => _$CustomPropertyTypeToJson(this);
   factory CustomPropertyType.fromJson(Map<String, dynamic> json) =>
       _$CustomPropertyTypeFromJson(json);
 }
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class Member {
   String name;
   String type;

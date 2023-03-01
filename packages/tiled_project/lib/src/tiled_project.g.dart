@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of tiled;
+part of 'tiled_project.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -22,10 +22,10 @@ TiledProject _$TiledProjectFromJson(Map<String, dynamic> json) => TiledProject(
 Map<String, dynamic> _$TiledProjectToJson(TiledProject instance) =>
     <String, dynamic>{
       'automappingRulesFile': instance.automappingRulesFile,
-      'commands': instance.commands,
+      'commands': instance.commands.map((e) => e.toJson()).toList(),
       'extensionsPath': instance.extensionsPath,
       'folders': instance.folders,
-      'propertyTypes': instance.propertyTypes,
+      'propertyTypes': instance.propertyTypes.map((e) => e.toJson()).toList(),
     };
 
 Command _$CommandFromJson(Map<String, dynamic> json) => Command(
@@ -51,27 +51,42 @@ Map<String, dynamic> _$CommandToJson(Command instance) => <String, dynamic>{
     };
 
 CustomPropertyType _$CustomPropertyTypeFromJson(Map<String, dynamic> json) =>
-    CustomPropertyType(
-      id: json['id'] as int,
-      type: json['type'] as String,
-    )
+    CustomPropertyType()
+      ..id = json['id'] as int
+      ..type = json['type'] as String
       ..name = json['name'] as String
-      ..color = json['color'] as String
+      ..storageType = json['storageType'] as String?
+      ..color = json['color'] as String?
       ..useAs =
-          (json['useAs'] as List<dynamic>).map((e) => e as String).toList()
-      ..members = (json['members'] as List<dynamic>)
-          .map((e) => Member.fromJson(e as Map<String, dynamic>))
-          .toList();
+          (json['useAs'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..members = (json['members'] as List<dynamic>?)
+          ?.map((e) => Member.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..values =
+          (json['values'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..valuesAsFlags = json['valuesAsFlags'] as bool?;
 
-Map<String, dynamic> _$CustomPropertyTypeToJson(CustomPropertyType instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'type': instance.type,
-      'name': instance.name,
-      'color': instance.color,
-      'useAs': instance.useAs,
-      'members': instance.members,
-    };
+Map<String, dynamic> _$CustomPropertyTypeToJson(CustomPropertyType instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'type': instance.type,
+    'name': instance.name,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('storageType', instance.storageType);
+  writeNotNull('color', instance.color);
+  writeNotNull('useAs', instance.useAs);
+  writeNotNull('members', instance.members?.map((e) => e.toJson()).toList());
+  writeNotNull('values', instance.values);
+  writeNotNull('valuesAsFlags', instance.valuesAsFlags);
+  return val;
+}
 
 Member _$MemberFromJson(Map<String, dynamic> json) => Member(
       name: json['name'] as String,
@@ -80,9 +95,19 @@ Member _$MemberFromJson(Map<String, dynamic> json) => Member(
       value: json['value'] as Object,
     );
 
-Map<String, dynamic> _$MemberToJson(Member instance) => <String, dynamic>{
-      'name': instance.name,
-      'type': instance.type,
-      'propertyType': instance.propertyType,
-      'value': instance.value,
-    };
+Map<String, dynamic> _$MemberToJson(Member instance) {
+  final val = <String, dynamic>{
+    'name': instance.name,
+    'type': instance.type,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('propertyType', instance.propertyType);
+  val['value'] = instance.value;
+  return val;
+}

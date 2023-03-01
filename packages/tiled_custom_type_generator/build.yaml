@@ -1,7 +1,15 @@
 builders:
-  tiled_custom_type_generator|thing:
-    import: "package:tiled_custom_type_generator/builders.dart"
-    builder_factories: ["tiledCustomTypeLocator"]
-    build_extensions: {'.dart': ['.tiled-custom-type']}
-    build_to: cache
+  tiled_custom_type_generator:
+    import: "package:tiled_custom_type_generator/builder.dart"
+    builder_factories: ["extractTypes"]
+    build_extensions: {"$lib$": ["../assets/custom-types.json"]}
+    build_to: source
     auto_apply: dependents
+    runs_before: ["json_serializable"]
+  json_serializable:
+    import: "package:json_serializable/builder.dart"
+    builder_factories: ["jsonSerializable"]
+    build_extensions: {".dart": ["json_serializable.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]

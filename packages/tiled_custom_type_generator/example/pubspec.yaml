@@ -1,15 +1,16 @@
 name: custom_type_example
 environment:
   sdk: ">=2.18.0 <3.0.0"
+publish_to: "none"
 
 dependencies:
-  tiled_custom_type_generator:
-    path: ../
+  tiled_custom_type_annotation:
+    path: ../../tiled_custom_type_annotation
   tiled:
+    path: ../../tiled
 
 dev_dependencies:
   build_runner: ^2.0.0
-
-dependency_overrides:
-  tiled:
-    path: ../../tiled
+  # json_serializable: ^6.6.1
+  tiled_custom_type_generator:
+    path: ../
