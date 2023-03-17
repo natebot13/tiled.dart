@@ -133,7 +133,7 @@ abstract class Layer {
         final width = parser.getInt('width');
         final height = parser.getInt('height');
         final dataNode = parser.formatSpecificParsing(
-          (json) => null, // data is just a string or list of int on JSON
+          (json) => json, // data is just a string or list of int on JSON
           (xml) => xml.getSingleChildOrNull('data'),
         );
         final compression = parser.getCompressionOrNull('compression') ??
@@ -177,7 +177,10 @@ abstract class Layer {
           defaults: DrawOrder.topDown,
         );
         final color = parser.getString('color', defaults: '#a0a0a4');
-        final objects = parser.getChildrenAs('object', TiledObject.parse);
+        final objects = parser.formatSpecificParsing(
+          (json) => json.getChildrenAs('objects', TiledObject.parse),
+          (xml) => xml.getChildrenAs('object', TiledObject.parse),
+        );
         layer = ObjectGroup(
           id: id,
           name: name,

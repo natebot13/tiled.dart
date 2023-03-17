@@ -122,7 +122,18 @@ class Tileset {
     final type = parser.getTilesetType('type', defaults: TilesetType.tileset);
     final version = parser.getString('version', defaults: '1.0');
 
-    final image = parser.getSingleChildOrNullAs('image', TiledImage.parse);
+    final image = parser.formatSpecificParsing(
+      (json) {
+        return TiledImage(
+          format: json.getStringOrNull('imageformat'),
+          height: json.getIntOrNull('imageheight'),
+          width: json.getIntOrNull('imagewidth'),
+          source: json.getStringOrNull('image'),
+          trans: json.getStringOrNull('imagetrans'),
+        );
+      },
+      (xml) => xml.getSingleChildOrNullAs('image', TiledImage.parse),
+    );
     final grid = parser.getSingleChildOrNullAs('grid', Grid.parse);
     final tileOffset =
         parser.getSingleChildOrNullAs('tileoffset', TileOffset.parse);
