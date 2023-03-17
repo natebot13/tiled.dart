@@ -297,23 +297,26 @@ class TiledMap {
     final version = parser.getString('version', defaults: '1.0');
     final width = parser.getInt('width');
 
-    final tilesets = parser.getChildrenAs(
-      'tileset',
-      (tilesetData) {
-        final tilesetSource = tilesetData.getStringOrNull('source');
-        if (tilesetSource == null || tsxList == null) {
-          return Tileset.parse(tilesetData);
-        }
-        final matchingTsx = tsxList.where(
-          (tsx) => tsx.filename == tilesetSource,
-        );
+    Tileset parseTileset(Parser tilesetData) {
+      final tilesetSource = tilesetData.getStringOrNull('source');
+      if (tilesetSource == null || tsxList == null) {
+        return Tileset.parse(tilesetData);
+      }
+      final matchingTsx = tsxList.where(
+        (tsx) => tsx.filename == tilesetSource,
+      );
 
-        return Tileset.parse(
-          tilesetData,
-          tsx: matchingTsx.isNotEmpty ? matchingTsx.first : null,
-        );
-      },
+      return Tileset.parse(
+        tilesetData,
+        tsx: matchingTsx.isNotEmpty ? matchingTsx.first : null,
+      );
+    }
+
+    final tilesets = parser.formatSpecificParsing(
+      (json) => json.getChildrenAs('tilesets', parseTileset),
+      (xml) => xml.getChildrenAs('tileset', parseTileset),
     );
+
     final layers = Layer.parseLayers(parser);
     final properties = parser.getProperties();
     final editorSettings = parser.getChildrenAs(

@@ -56,6 +56,9 @@ class JsonParser extends Parser {
     if (json[name] == null) {
       return [];
     }
+    if (json[name] is Map) {
+      return [JsonParser(json[name] as Map<String, dynamic>)];
+    }
     return (json[name] as List<dynamic>)
         .map((dynamic e) => JsonParser(e as Map<String, dynamic>))
         .toList();

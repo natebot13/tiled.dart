@@ -1,9 +1,9 @@
 part of tiled;
 
 class TileMapParser {
-  static TiledMap parseJson(String json) {
+  static TiledMap parseJson(String json, {List<TsxProvider>? tsxList}) {
     final parser = JsonParser(jsonDecode(json) as Map<String, dynamic>);
-    return TiledMap.parse(parser);
+    return TiledMap.parse(parser, tsxList: tsxList);
   }
 
   /// Parses the provided map xml.
