@@ -10,8 +10,13 @@ environment:
 dependencies:
   json_annotation: ^4.8.0
   meta: ^1.8.0
+  tiled: 0.10.1
+
+dependency_overrides:
   tiled:
-    path: ../tiled
+    git:
+      url: git@github.com:natebot13/tiled.dart.git
+      path: packages/tiled
 
 dev_dependencies:
   lints: ^2.0.0

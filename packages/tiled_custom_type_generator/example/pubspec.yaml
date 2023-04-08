@@ -5,9 +5,18 @@ publish_to: "none"
 
 dependencies:
   tiled_custom_type_annotation:
-    path: ../../tiled_custom_type_annotation
+    git:
+      url: git@github.com:natebot13/tiled.dart.git
+      ref: main
+      path: packages/tiled_custom_type_annotation
+  tiled: ^0.10.0
+
+dependency_overrides:
   tiled:
-    path: ../../tiled
+    git:
+      url: git@github.com:natebot13/tiled.dart.git
+      ref: main
+      path: packages/tiled
 
 dev_dependencies:
   build_runner: ^2.0.0
