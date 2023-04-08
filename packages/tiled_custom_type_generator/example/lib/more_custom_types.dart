@@ -13,7 +13,7 @@ enum Thing {
 class FileData {
   @TiledCustomTypeMember(type: PropertyType.file)
   String name;
-  FileData({required this.name});
+  FileData({this.name = "default" + ".txt"});
 
   Map<String, dynamic> toJson() => _$FileDataToJson(this);
   factory FileData.fromJson(Map<String, dynamic> json) =>

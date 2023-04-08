@@ -7,7 +7,7 @@ part of 'more_custom_types.dart';
 // **************************************************************************
 
 FileData _$FileDataFromJson(Map<String, dynamic> json) => FileData(
-      name: json['name'] as String,
+      name: json['name'] as String? ?? "default" + ".txt",
     );
 
 Map<String, dynamic> _$FileDataToJson(FileData instance) => <String, dynamic>{

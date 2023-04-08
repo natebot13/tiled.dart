@@ -5,6 +5,7 @@ import 'dart:isolate';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
+import 'package:expressions/expressions.dart';
 import 'package:glob/glob.dart';
 import 'package:source_gen/source_gen.dart'
     hide GeneratorForAnnotation, Generator;
@@ -262,6 +263,15 @@ class ClassGeneratorHelper {
       },
     );
 
+    final evaluator = const ExpressionEvaluator();
+    final defaultParameters = {
+      for (final parameter in element.unnamedConstructor!.parameters
+          .where((parameter) => parameter.isInitializingFormal)
+          .where((element) => element.hasDefaultValue))
+        parameter.name:
+            evaluator.eval(Expression.parse(parameter.defaultValueCode!), {})
+    };
+
     var accessibleFieldSet = accessibleFields.values.toSet();
     final memberChecker = TypeChecker.fromRuntime(TiledCustomTypeMember);
     return CustomPropertyType()
@@ -306,7 +316,7 @@ class ClassGeneratorHelper {
           name: field.name,
           type: memberType.name,
           propertyType: propertyType,
-          value: defaultValues[memberType]!,
+          value: defaultParameters[field.name] ?? defaultValues[memberType]!,
         );
       }).toList();
   }
