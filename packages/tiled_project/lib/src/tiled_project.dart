@@ -21,9 +21,31 @@ class TiledProject {
   final List<String> folders;
   final List<CustomPropertyType> propertyTypes;
 
+  // Returns the default values of the custom types
+  Map<String, Map<String, Object>> get defaultValues {
+    final rootValues = {
+      for (final type in propertyTypes) type.name: type.memberValues
+    };
+    for (final value in rootValues.values) {
+      for (final name in value.keys) {
+        value[name] = rootValues[name.toCapitalized()] ?? value[name]!;
+      }
+    }
+    return rootValues;
+  }
+
   Map<String, dynamic> toJson() => _$TiledProjectToJson(this);
   factory TiledProject.fromJson(Map<String, dynamic> json) =>
       _$TiledProjectFromJson(json);
+}
+
+extension StringCasingExtension on String {
+  String toCapitalized() =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1)}' : '';
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
+      .split(' ')
+      .map((str) => str.toCapitalized())
+      .join(' ');
 }
 
 @JsonSerializable()
@@ -70,6 +92,9 @@ class CustomPropertyType {
   Map<String, dynamic> toJson() => _$CustomPropertyTypeToJson(this);
   factory CustomPropertyType.fromJson(Map<String, dynamic> json) =>
       _$CustomPropertyTypeFromJson(json);
+
+  Map<String, Object> get memberValues =>
+      {for (final member in members ?? []) member.name: member.value};
 }
 
 @JsonSerializable(includeIfNull: false)

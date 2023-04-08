@@ -7,15 +7,15 @@ part of 'tiled_project.dart';
 // **************************************************************************
 
 TiledProject _$TiledProjectFromJson(Map<String, dynamic> json) => TiledProject(
-      automappingRulesFile: json['automappingRulesFile'] as String,
-      commands: (json['commands'] as List<dynamic>)
-          .map((e) => Command.fromJson(e as Map<String, dynamic>))
+      automappingRulesFile: json['automappingRulesFile'] as String? ?? '',
+      commands: (json['commands'] as List<dynamic>?)
+          ?.map((e) => Command.fromJson(e as Map<String, dynamic>))
           .toList(),
-      extensionsPath: json['extensionsPath'] as String,
+      extensionsPath: json['extensionsPath'] as String? ?? '',
       folders:
-          (json['folders'] as List<dynamic>).map((e) => e as String).toList(),
-      propertyTypes: (json['propertyTypes'] as List<dynamic>)
-          .map((e) => CustomPropertyType.fromJson(e as Map<String, dynamic>))
+          (json['folders'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      propertyTypes: (json['propertyTypes'] as List<dynamic>?)
+          ?.map((e) => CustomPropertyType.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
