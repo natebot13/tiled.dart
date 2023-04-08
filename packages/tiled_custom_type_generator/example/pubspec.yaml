@@ -22,4 +22,7 @@ dev_dependencies:
   build_runner: ^2.0.0
   # json_serializable: ^6.6.1
   tiled_custom_type_generator:
-    path: ../
+    git:
+      url: git@github.com:natebot13/tiled.dart.git
+      ref: main
+      path: packages/tiled_custom_type_generator
