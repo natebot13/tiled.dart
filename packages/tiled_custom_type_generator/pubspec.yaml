@@ -29,6 +29,13 @@ dependencies:
   tiled: ^0.10.0
   expressions: ^0.2.5
 
+dependency_overrides:
+  tiled:
+    git:
+      url: git@github.com:natebot13/tiled.dart.git
+      ref: main
+      path: packages/tiled
+
 dev_dependencies:
   build_runner: ^2.3.3
   lints: '>=1.0.0 <3.0.0'
