@@ -392,11 +392,11 @@ extension ObjectAlignmentExtension on ObjectAlignment {
       case ObjectAlignment.unspecified:
         return 'unspecified';
       case ObjectAlignment.topLeft:
-        return 'topLeft';
+        return 'topleft';
       case ObjectAlignment.top:
         return 'top';
       case ObjectAlignment.topRight:
-        return 'topRight';
+        return 'topright';
       case ObjectAlignment.left:
         return 'left';
       case ObjectAlignment.center:
@@ -404,11 +404,11 @@ extension ObjectAlignmentExtension on ObjectAlignment {
       case ObjectAlignment.right:
         return 'right';
       case ObjectAlignment.bottomLeft:
-        return 'bottomLeft';
+        return 'bottomleft';
       case ObjectAlignment.bottom:
         return 'bottom';
       case ObjectAlignment.bottomRight:
-        return 'bottomRight';
+        return 'bottomright';
     }
   }
 }
