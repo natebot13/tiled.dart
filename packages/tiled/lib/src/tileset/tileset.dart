@@ -110,7 +110,8 @@ class Tileset {
     final margin = parser.getInt('margin', defaults: 0);
     final name = parser.getStringOrNull('name');
     final objectAlignment = parser.getObjectAlignment(
-      parser.getString('objectalignment', defaults: 'unspecified'),
+      'objectalignment',
+      defaults: ObjectAlignment.unspecified,
     );
     final source = parser.getStringOrNull('source');
     final spacing = parser.getInt('spacing', defaults: 0);

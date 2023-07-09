@@ -58,6 +58,18 @@
     },
     {
         "id": 23,
+        "type": "enum",
+        "name": "MyEnum",
+        "storageType": "string",
+        "values": [
+            "one",
+            "two",
+            "three"
+        ],
+        "valuesAsFlags": false
+    },
+    {
+        "id": 24,
         "type": "class",
         "name": "SomeCoolObject",
         "useAs": [
@@ -82,6 +94,12 @@
                 "name": "decimal",
                 "type": "float",
                 "value": 0
+            },
+            {
+                "name": "choice",
+                "type": "class",
+                "propertyType": "MyEnum",
+                "value": {}
             }
         ]
     }

@@ -8,6 +8,7 @@ part of 'my_custom_types.dart';
 
 SomeCoolObject _$SomeCoolObjectFromJson(Map<String, dynamic> json) =>
     SomeCoolObject(
+      choice: $enumDecode(_$MyEnumEnumMap, json['choice']),
       name: json['name'] as String,
       theAgeOfAThing: json['theAgeOfAThing'] as int,
       decimal: (json['decimal'] as num).toDouble(),
@@ -18,4 +19,11 @@ Map<String, dynamic> _$SomeCoolObjectToJson(SomeCoolObject instance) =>
       'name': instance.name,
       'theAgeOfAThing': instance.theAgeOfAThing,
       'decimal': instance.decimal,
+      'choice': _$MyEnumEnumMap[instance.choice]!,
     };
+
+const _$MyEnumEnumMap = {
+  MyEnum.one: 'one',
+  MyEnum.two: 'two',
+  MyEnum.three: 'three',
+};

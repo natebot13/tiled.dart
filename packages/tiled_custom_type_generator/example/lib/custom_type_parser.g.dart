@@ -14,5 +14,6 @@ Object? $getCustomTypeInstance(CustomTypeProperty property) {
 
 Object? $getCustomTypeEnum(StringProperty property) {
   if (property.propertyType == 'Thing') return Thing.values.asNameMap()[property.value];
+  if (property.propertyType == 'MyEnum') return MyEnum.values.asNameMap()[property.value];
   return null;
 }

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:math' show Rectangle;
 
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:tiled/tiled.dart';
 import 'package:xml/xml.dart';
 
