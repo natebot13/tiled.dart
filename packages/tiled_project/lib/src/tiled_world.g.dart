@@ -8,13 +8,13 @@ part of 'tiled_world.dart';
 
 TiledWorld _$TiledWorldFromJson(Map<String, dynamic> json) => TiledWorld(
       maps: (json['maps'] as List<dynamic>?)
-          ?.map((e) => e as Map<String, dynamic>)
+          ?.map((e) => WorldMap.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$TiledWorldToJson(TiledWorld instance) =>
     <String, dynamic>{
-      'maps': instance.maps,
+      'maps': instance.maps.map((e) => e.toJson()).toList(),
     };
 
 WorldMap _$WorldMapFromJson(Map<String, dynamic> json) => WorldMap(
