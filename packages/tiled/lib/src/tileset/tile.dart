@@ -65,7 +65,19 @@ class Tile {
                   .map((str) => str.isEmpty ? null : int.parse(str))
                   .toList() ??
               [],
-          image: parser.getSingleChildOrNullAs('image', TiledImage.parse),
+          image: parser.formatSpecificParsing(
+            (jsonParser) {
+              final source = jsonParser.getStringOrNull('image');
+              if (source != null) {
+                final width = jsonParser.getInt('imagewidth');
+                final height = jsonParser.getInt('imageheight');
+                return TiledImage(source: source, width: width, height: height);
+              }
+              return null;
+            },
+            (xmlParser) =>
+                xmlParser.getSingleChildOrNullAs('image', TiledImage.parse),
+          ),
           imageRect: Rectangle(
             parser.getDoubleOrNull('x') ?? 0,
             parser.getDoubleOrNull('y') ?? 0,
