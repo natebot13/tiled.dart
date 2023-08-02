@@ -204,7 +204,11 @@ abstract class Layer {
         break;
       case LayerType.imageLayer:
         final transparentColor = parser.getStringOrNull('transparentcolor');
-        final image = parser.getSingleChildAs('image', TiledImage.parse);
+        final image = parser.formatSpecificParsing(
+          (jsonParser) =>
+              TiledImage(source: jsonParser.getStringOrNull('image')),
+          (xmlParser) => xmlParser.getSingleChildAs('image', TiledImage.parse),
+        );
         final repeatX = parser.getBool('repeatx', defaults: false);
         final repeatY = parser.getBool('repeaty', defaults: false);
         layer = ImageLayer(
