@@ -123,6 +123,7 @@ class TiledCustomTypeAggregator implements Builder {
 
     final customTypeGuts = StringBuffer();
     final customEnumGuts = StringBuffer();
+    final objectRefGuts = StringBuffer();
 
     await for (final asset in buildStep.findAssets(
       Glob("**.dart", recursive: true),
@@ -134,6 +135,9 @@ class TiledCustomTypeAggregator implements Builder {
       );
 
       final props = generator.generate(library, buildStep);
+      final propsByName = Map.fromEntries(
+        props.map((prop) => MapEntry(prop.name, prop)),
+      );
       if (props.isNotEmpty) {
         codeBuffer.writeln("import '${asset.pathSegments.skip(1).join('/')}';");
         for (final prop in props) {
@@ -148,24 +152,47 @@ class TiledCustomTypeAggregator implements Builder {
               "  if (property.propertyType == '$typeName') return $typeName.values.asNameMap()[property.value];",
             );
           }
+          objectRefGuts.writeln("      case '$typeName':");
+          for (final path in objectRefPaths('', prop, propsByName)) {
+            objectRefGuts.writeln('        parents.add(prop.value$path!);');
+          }
+          objectRefGuts.writeln('        break;');
         }
       }
       properties.addAll(props);
     }
 
+    codeBuffer.writeln();
+
+    // Write custom type inflation block
     codeBuffer.writeln(
       'Object? \$getCustomTypeInstance(CustomTypeProperty property) {',
     );
     codeBuffer.write(customTypeGuts.toString());
     codeBuffer.writeln('  return null;');
     codeBuffer.writeln('}');
+    codeBuffer.writeln();
 
+    // Write custom enum mapping
     codeBuffer.writeln(
-      "\nObject? \$getCustomTypeEnum(StringProperty property) {",
+      "Object? \$getCustomTypeEnum(StringProperty property) {",
     );
     codeBuffer.write(customEnumGuts.toString());
     codeBuffer.writeln('  return null;');
     codeBuffer.writeln('}');
+    codeBuffer.writeln();
+
+    // Write custom types that could point to other objects
+    codeBuffer.writeln('Set<int> \$getParents(Property<Object> prop) {');
+    codeBuffer.writeln('  final parents = <int>{};');
+    codeBuffer.writeln('  if (prop is CustomTypeProperty) {');
+    codeBuffer.writeln('    switch (prop.propertyType) {');
+    codeBuffer.write(objectRefGuts.toString());
+    codeBuffer.writeln('    }');
+    codeBuffer.writeln('  }');
+    codeBuffer.writeln('  return parents;');
+    codeBuffer.writeln('}');
+    codeBuffer.writeln();
 
     buildStep.writeAsString(
       buildStep.allowedOutputs.first,
@@ -176,6 +203,24 @@ class TiledCustomTypeAggregator implements Builder {
       buildStep.allowedOutputs.skip(1).first,
       codeBuffer.toString(),
     );
+  }
+}
+
+Iterable<String> objectRefPaths(
+  String prefix,
+  CustomPropertyType prop,
+  Map<String, CustomPropertyType> propsByName,
+) sync* {
+  for (final member in prop.members ?? <Member>[]) {
+    final path = prefix + "['${member.name}']";
+    if (member.type == 'object') {
+      yield path;
+    } else if (member.type == 'class') {
+      final subType = propsByName[member.propertyType];
+      if (subType != null) {
+        yield* objectRefPaths(path, subType, propsByName);
+      }
+    }
   }
 }
 
