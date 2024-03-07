@@ -46,6 +46,12 @@ TiledCustomTypeMember decodeMemberAnnotation(ConstantReader cr) {
   );
 }
 
+TiledCustomEnum decodeEnumAnnotation(ConstantReader cr) {
+  final useAsFlagsReader = cr.read('useAsFlags');
+  final useAsFlags = useAsFlagsReader.get<bool>();
+  return TiledCustomEnum(useAsFlags: useAsFlags);
+}
+
 /// Reads all dart files and outputs json definitions of their custom types to
 /// a single file
 class TiledCustomTypeAggregator implements Builder {
@@ -61,6 +67,7 @@ class TiledCustomTypeAggregator implements Builder {
   @override
   FutureOr<void> build(BuildStep buildStep) async {
     GenericReader.addDecoder<TiledCustomTypeMember>(decodeMemberAnnotation);
+    GenericReader.addDecoder<TiledCustomEnum>(decodeEnumAnnotation);
 
     log.info('Processing with $includeList to $_outFile');
 
@@ -148,9 +155,16 @@ class TiledCustomTypeAggregator implements Builder {
             );
           }
           if (prop.type == 'enum') {
-            customEnumGuts.writeln(
-              "  if (property.propertyType == '$typeName') return $typeName.values.asNameMap()[property.value];",
-            );
+            lookup(name) => "$typeName.values.asNameMap()[$name]!";
+            customEnumGuts
+                .write("  if (property.propertyType == '$typeName') return ");
+            if (prop.valuesAsFlags ?? false) {
+              customEnumGuts.writeln(
+                "property.value.split(',').map((name) => ${lookup('name')}).toList();",
+              );
+            } else {
+              customEnumGuts.writeln("${lookup('property.value')};");
+            }
           }
           objectRefGuts.writeln("      case '$typeName':");
           for (final path in objectRefPaths('', prop, propsByName)) {
@@ -268,7 +282,7 @@ class CustomTypeGenerator {
       final helper = ClassGeneratorHelper(element);
       return helper.generate(buildStep);
     } else {
-      final helper = EnumGeneratorHelper(element as EnumElement);
+      final helper = EnumGeneratorHelper(element as EnumElement, annotation);
       return helper.generate();
     }
   }
@@ -369,7 +383,8 @@ class ClassGeneratorHelper {
 
 class EnumGeneratorHelper {
   final EnumElement element;
-  EnumGeneratorHelper(this.element);
+  final ConstantReader annotation;
+  EnumGeneratorHelper(this.element, this.annotation);
   CustomPropertyType? generate() {
     return CustomPropertyType()
       ..id = cachedTypeNameToId[element.name]!
@@ -380,6 +395,6 @@ class EnumGeneratorHelper {
           .map((field) => field.name)
           .where((e) => e != 'values')
           .toList()
-      ..valuesAsFlags = false;
+      ..valuesAsFlags = annotation.get<TiledCustomEnum>().useAsFlags;
   }
 }

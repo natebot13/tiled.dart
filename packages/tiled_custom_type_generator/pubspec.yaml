@@ -20,10 +20,11 @@ dependencies:
       ref: main
       path: packages/tiled_project
   tiled_custom_type_annotation:
-    git:
-      url: git@github.com:natebot13/tiled.dart.git
-      ref: main
-      path: packages/tiled_custom_type_annotation
+    path: ../tiled_custom_type_annotation
+    # git:
+    #   url: git@github.com:natebot13/tiled.dart.git
+    #   ref: main
+    #   path: packages/tiled_custom_type_annotation
   json_serializable: ^6.6.1
   generic_reader: ^0.3.0
   tiled: ^0.10.0

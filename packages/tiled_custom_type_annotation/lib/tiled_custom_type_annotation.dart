@@ -11,7 +11,8 @@ class TiledCustomType extends JsonSerializable {
 
 @Target({TargetKind.enumType})
 class TiledCustomEnum extends JsonEnum {
-  const TiledCustomEnum() : super(alwaysCreate: true);
+  final bool useAsFlags;
+  const TiledCustomEnum({this.useAsFlags = false}) : super(alwaysCreate: true);
 }
 
 @Target({TargetKind.field})
