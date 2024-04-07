@@ -8,7 +8,7 @@ environment:
   sdk: '>=2.19.2 <3.0.0'
 
 dependencies:
-  json_annotation: ^4.8.0
+  json_annotation: ^4.8.1
   meta: ^1.8.0
   tiled: 0.10.1
 

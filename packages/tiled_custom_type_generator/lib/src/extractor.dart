@@ -313,6 +313,9 @@ class ClassGeneratorHelper {
           unavailableReasons[field.name] =
               'Setter-only properties are not supported.';
           log.warning('Setters are ignored: ${element.name}.${field.name}');
+        } else if (!field.isFinal && field.setter == null) {
+          assert(field.getter != null);
+          // skip non-final getters
         } else {
           assert(!map.containsKey(field.name));
           map[field.name] = field;
